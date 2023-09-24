@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Background from './Background';
 
 function Game() {
   // State variables for game data.
@@ -34,7 +35,7 @@ function Game() {
 
   return (
     <div>
-      {/* Render game elements using gameState */}
+        <Background />
     </div>
   );
 }
