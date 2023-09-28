@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Background from './Background';
 import DinoTest from './DinoTest';
+import Player from './Player';
+import Ground from './Ground';
+import { ControllerProvider, useControllerContext } from './ControllerContext';
 
 function Game() {
   // State variables for game data.
   const [gameState, setGameState] = useState(/* initial game state */);
+  const [updateRate, setUpdateRate] = useState(0);
   const [time, setTime] = useState(0);
   const [lastTime, setLastTime] = useState(0); 
+  const [count, setCount] = useState(0)
 
   // Update game state and render the game.
   const gameLoop = useCallback(
@@ -41,9 +46,13 @@ function Game() {
 
   return (
     <div>
-        <Background />
-        <DinoTest time={time} />
-        <div style={{width: '95%', height: 2, backgroundColor: 'black', position: 'absolute', top: '55%', left: 0}}></div>
+      <ControllerProvider>
+        <>
+          <Background />
+          <Ground />
+          <Player time={time}/>
+        </>
+      </ControllerProvider>
     </div>
   );
 }

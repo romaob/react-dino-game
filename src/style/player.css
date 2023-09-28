@@ -1,0 +1,36 @@
+.player-main {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, 0);
+}
+.player-part {
+    position: relative;
+}
+.collider-box {
+    position: absolute;
+    width: 126px;
+    height: 50px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #F00;
+}
+
+/* if .player-main has data-jumping animate the .player-main, moving it up and back down */
+.player-main[data-jumping] {
+    animation: jump 1s ease-in-out;
+}
+
+/* The jump animation */
+@keyframes jump {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, -250%);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}

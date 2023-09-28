@@ -5,17 +5,16 @@ const UPDATE_RUN_RATE = 100;
 
 const STOP = false;
 
+var runUpdate = 0;
+var bodyUpdate = 0; 
+var stepRun = 0;
+var stepBody = 0;
+
 export default function DinoTest({
     time
 }: {
     time: number;
-}) {
-    const [runUpdate, setRunUpdate] = useState(0);
-    const [bodyUpdate, setBodyUpdate] = useState(0);
-    const [stepRun, setStepRun] = useState(0);
-    const [stepBody, setStepBody] = useState(0);
-
-    const body = require('../assets/dino_body_0.png');
+}) {    const body = require('../assets/dino_body_0.png');
 
     const headAA = require('../assets/dino_head_0.png');
     const headAB = require('../assets/dino_head_0b.png');
@@ -57,9 +56,9 @@ export default function DinoTest({
             } else if (stepBody === 1) {
                 setHeadImage(headAB);
             }
-            setStepBody(stepBody === 0 ? 1 : 0);
+            stepBody = stepBody === 0 ? 1 : 0;
             setHandsImage(stepBody > 0 ? handsA : handsB);
-            setBodyUpdate(0);
+            bodyUpdate = 0;
             return;
         }
         if (runUpdate > UPDATE_RUN_RATE) {
@@ -87,24 +86,25 @@ export default function DinoTest({
                     nextStep = 0;
                     break;
             }
-            setStepRun(nextStep);
-            setRunUpdate(0);
+            stepRun = nextStep;
+            runUpdate = 0;
             return;
         }
-        setRunUpdate(runUpdate + time);  
-        setBodyUpdate(bodyUpdate + time);
+        runUpdate = runUpdate + time;  
+        bodyUpdate = bodyUpdate + time;
     }, [time])
 
   return (
     <>
-        <h2>{stepBody} - {stepRun} - {runUpdate}</h2>
-        <div style={styles.dinoMain}>
+        {/* <h2>{stepBody} - {stepRun} - {runUpdate}</h2> */}
+        <div style={styles.dinoMain}> 
             <img style={styles.dinoPart} src={body} alt='body' />
             <img style={styles.dinoPart} src={tailImage} alt='tail' />
             <img style={styles.dinoPart} src={headImage} alt='head' />
             <img style={styles.dinoPart} src={handsImage} alt='hands' />
             <img style={styles.dinoPart} src={legImageA} alt='leg' />
             <img style={styles.dinoPart} src={legImageB} alt='leg' />  
+            <div style={styles.colliderBox}></div>
         </div> 
     </>
   )
@@ -113,6 +113,7 @@ export default function DinoTest({
 type Styles = {
     dinoMain: React.CSSProperties;
     dinoPart: React.CSSProperties;
+    colliderBox: React.CSSProperties;
   };
   
 const styles: Styles = {
@@ -128,5 +129,15 @@ const styles: Styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
+    },
+    colliderBox: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 100,
+        height: 50,
+        backgroundColor: 'red',
+        opacity: 0.5,
     },
 }
