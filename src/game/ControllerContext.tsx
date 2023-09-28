@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 // Define the context type
 interface ControllerContextType {
@@ -35,9 +35,26 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
     setJump(3);
     await new Promise(r => setTimeout(r, 500));
     setJump(4);
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(r => setTimeout(r, ));
     setJump(0);
   }
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+        if (event.code === 'Space') {
+            handleJump();
+          }
+    },
+    [],
+  )
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
 
   return (
     <ControllerContext.Provider value={contextValue}>
