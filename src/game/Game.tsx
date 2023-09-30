@@ -3,7 +3,7 @@ import Background from './Background';
 import DinoTest from './DinoTest';
 import Player from './Player';
 import Ground from './Ground';
-import { ControllerProvider, useControllerContext } from './ControllerContext';
+import { ControllerProvider, useControllerContext } from '../context/ControllerContext';
 
 function Game() {
   // State variables for game data.
@@ -49,7 +49,7 @@ function Game() {
       <ControllerProvider>
         <>
           <Background />
-          <Ground />
+          <Ground time={time}/>
           <Player time={time}/>
         </>
       </ControllerProvider>

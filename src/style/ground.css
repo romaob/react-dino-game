@@ -1,0 +1,48 @@
+.ground {
+    overflow: hidden;
+    position: absolute;
+    top: calc(50% + 32px);
+    min-width: 100%;
+    border-top: 1px solid #000;
+    width: 100vw;
+    height: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* if ground data-moving is true it should move the ground from right to left*/
+/* .ground-content[data-moving="true"] *{
+    animation: move 3s linear forwards;
+} */
+
+.ground-image-wrapper {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ground-image-wrapper[data-moving="true"] {
+    animation: move 60s linear forwards;
+}
+.ground-image {
+    width: 14px;
+}
+
+/*
+.moving-image [data-moving="true"] {
+    animation: move 3s linear forwards;
+}
+*/
+
+
+/* The jump animation */
+@keyframes move {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-10000px);
+    }
+}
