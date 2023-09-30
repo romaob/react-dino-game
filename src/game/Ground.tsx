@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useControllerContext } from '../context/ControllerContext';
 import { v4 as uuidv4 } from 'uuid';
 import { GroundObjects } from './ImageCollections';
-import Obstacle from './Obstacle';
+import Obstacle, { ObstacleType } from './Obstacle';
 
 const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
 const ground_update_rate = 1000;
 var ground_update = 0;
+
+const obstacle_min_generate = 2000;
+var obstacle_update = 0;
+var next_obstacle_time = obstacle_min_generate;
 
 type Props = {
   time: number
@@ -25,6 +29,7 @@ export default function Ground({time}: Props) {
 
   const [run, setRun] = useState(false);
   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
+  const [obstaclesToRender, setObstaclesToRender] = useState<ObstacleType[]>([])
 
   useEffect(() => {
     if (jump && !run) {
@@ -58,21 +63,41 @@ export default function Ground({time}: Props) {
         img: GroundObjects[randomIndex],
         ref: React.createRef<HTMLDivElement>()
       }
-      const newItems = []
 
       //Check if there is any ref outside the screen, if so, remove it
-      itemsToRender.forEach((item, index) => {
+      const newItems = itemsToRender.filter((item) => {
         let bounding = item?.ref?.current?.getBoundingClientRect();
         if (bounding && bounding.right >= 0) {
-          newItems.push(item)
+          return true
         }
+        return false
       })
 
       newItems.push(newItem)
 
       setItemsToRender(newItems)
       ground_update = 0
-      console.log('items total: ', newItems.length)
+    }
+    //Obstacle generator
+    obstacle_update += time
+    if (obstacle_update >= next_obstacle_time) {
+      const newObstacle = {
+        id: uuidv4(),
+        ref: React.createRef<HTMLDivElement>()
+      }
+      //Check if there is any ref outside the screen, if so, remove it
+      const newObstacles = obstaclesToRender.filter((obstacle) => {
+        let bounding = obstacle?.ref?.current?.getBoundingClientRect();
+        if (bounding && bounding.right >= 0) {
+          return true
+        }
+        return false
+      })
+      newObstacles.push(newObstacle)
+      setObstaclesToRender(newObstacles)
+      obstacle_update = 0
+      next_obstacle_time = (Math.floor(Math.random() * 4) * 1000) + obstacle_min_generate
+      console.log('next_obstacle_time: ', next_obstacle_time)      
     }
   }, [time])
 
@@ -99,7 +124,15 @@ export default function Ground({time}: Props) {
       }
     </div>
     <div className='obstacles'>
-      <Obstacle id={'test'} moving={run} time={time}/>
+      {obstaclesToRender.map((obstacle) => (
+        <Obstacle 
+          id={obstacle.id} 
+          moving={run} 
+          time={time} 
+          obstacleRef={obstacle.ref} 
+          key={obstacle.id}
+        />
+      ))}
     </div>
     </>
   )

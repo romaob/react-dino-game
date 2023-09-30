@@ -1,18 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Obstacles } from './ImageCollections'
 import { usePlayerContext } from '../context/PlayerContext'
+import { type } from 'os'
+
+export type ObstacleType = {
+    id: string,
+    ref: React.RefObject<HTMLDivElement>
+}
 
 type Props = {
     time: number,
     id: string,
-    ref?: React.RefObject<HTMLDivElement>
+    obstacleRef: React.RefObject<HTMLDivElement>
     moving: boolean
 }
 
 export default function Obstacle({
     time,
     id,
-    ref,
+    obstacleRef,
     moving,
 }: Props) {
     const colliderRef = useRef<HTMLDivElement>(null)
@@ -44,7 +50,7 @@ export default function Obstacle({
     <div
         className='ground-image-wrapper' 
         data-moving={moving}
-        ref={ref}
+        ref={obstacleRef}
         style={{right: 0}}
     >
         

@@ -59,7 +59,7 @@ export default function Player({
     if (jump > 0 && speed > 0) {
         return (
             <div className='player-main' data-jumping={jump > 1 && jump < 4 ? true : undefined}>
-                <div className='player-collider'></div>
+                <div className='player-collider' ref={playerColliderRef}></div>
                 {jump === 1 && <img className='player-part' src={imageJumpA} alt="dino" />}
                 {jump === 2 && <img className='player-part' src={imageJumpB} alt="dino" />}
                 {jump === 3 && <img className='player-part' src={imageJumpC} alt="dino" />}
