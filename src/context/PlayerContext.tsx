@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 
 interface PlayerContextType {
+    health: number;
     playerColliderRef: React.RefObject<HTMLDivElement> | null;
     setPlayerColliderRef: (ref: React.RefObject<HTMLDivElement>) => void;
     onDamage?: (amount: number) => void;
@@ -18,13 +19,15 @@ export function usePlayerContext() {
 }
 
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
+    const [health, setHealth] = useState(100);
     const [playerColliderRef, setPlayerColliderRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
 
     const onDamage = (amount: number) => {
-        console.log('damage', amount);
+        setHealth(health - amount > 0 ? health - amount : 0);
     }
 
     const contextValue: PlayerContextType = {
+        health: health,
         playerColliderRef,
         setPlayerColliderRef,
         onDamage: onDamage

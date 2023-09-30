@@ -1,0 +1,16 @@
+.healthbar{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 250px;
+    height: 15px;
+    border: 2px solid black;
+    border-radius: 2px;
+    margin: 10px;
+}
+
+.healthbar-inner{
+    height: 100%;
+    background-color: black;
+}

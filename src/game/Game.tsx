@@ -5,6 +5,7 @@ import Player from './Player';
 import Ground from './Ground';
 import { ControllerProvider, useControllerContext } from '../context/ControllerContext';
 import { PlayerProvider } from '../context/PlayerContext';
+import HealthBar from './HealthBar';
 
 function Game() {
   // State variables for game data.
@@ -51,6 +52,7 @@ function Game() {
         <PlayerProvider>
           <>
             <Background />
+            <HealthBar />
             <Ground time={time}/>
             <Player time={time}/>
           </>

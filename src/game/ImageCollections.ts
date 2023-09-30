@@ -1,3 +1,24 @@
+export const PlayerWalk = {
+  imageA: require('../assets/dino_run_0.png'),
+  imageB: require('../assets/dino_run_1.png'),
+  imageC: require('../assets/dino_run_2.png'),
+  imageIdleA: require('../assets/dino_idle_0.png'),
+}
+
+export const PlayerJump = {
+  imageJumpA: require('../assets/dino_jump_0.png'),
+  imageJumpB: require('../assets/dino_jump_1.png'),
+  imageJumpC: require('../assets/dino_jump_2.png'),
+  imageJumpD: require('../assets/dino_jump_3.png'),
+}
+export const PlayerDead = {
+  imageDeadA: require('../assets/dino_dead_0.png'),
+  imageDeadB: require('../assets/dino_dead_1.png'),
+  imageDeadC: require('../assets/dino_dead_2.png'),
+  imageDeadD: require('../assets/dino_dead_3.png'),
+}
+
+
 export const GroundObjects = [
     require('../assets/ground_01.png'),
     require('../assets/ground_02.png'),

@@ -2,6 +2,7 @@
 @import './style/player.css';
 @import './style/ground.css';
 @import './style/obstacle.css';
+@import './style/healthbar.css';
 
 .activable-area {
     position: absolute;

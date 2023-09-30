@@ -26,6 +26,10 @@
 .ground-image-wrapper[data-moving="true"] {
     animation: move 60s linear forwards;
 }
+.ground-image-wrapper[data-moving="false"] {
+    animation: move 60s linear forwards;
+    animation-play-state: paused;
+}
 .ground-image {
     width: 14px;
 }

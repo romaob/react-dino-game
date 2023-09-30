@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Obstacles } from './ImageCollections'
 import { usePlayerContext } from '../context/PlayerContext'
-import { type } from 'os'
+
+const obstacle_update_rate = 100;
 
 export type ObstacleType = {
     id: string,
@@ -23,6 +24,7 @@ export default function Obstacle({
 }: Props) {
     const colliderRef = useRef<HTMLDivElement>(null)
     const [imgIndex, setimgIndex] = useState( Math.floor(Math.random() * 6))
+    const [obstacleUpdate, setObstacleUpdate] = useState(0)
     const img = Obstacles[imgIndex];
 
     const {playerColliderRef, onDamage} = usePlayerContext();
@@ -32,24 +34,30 @@ export default function Obstacle({
         if (!colliderRef?.current) return
         if (!playerColliderRef?.current) return
 
-        //Check if the player is colliding with the obstacle
-        const playerRect = playerColliderRef.current.getBoundingClientRect()
-        const obstacleRect = colliderRef.current.getBoundingClientRect()
-        const isColliding = !(
-            playerRect.right < obstacleRect.left ||
-            playerRect.left > obstacleRect.right ||
-            playerRect.bottom < obstacleRect.top ||
-            playerRect.top > obstacleRect.bottom
-        )   
-        if (isColliding) {
-            onDamage && onDamage(1)
+        let obstacle_update = obstacleUpdate;
+        obstacle_update += time
+        if (obstacle_update >= obstacle_update_rate) {
+            //Check if the player is colliding with the obstacle
+            const playerRect = playerColliderRef.current.getBoundingClientRect()
+            const obstacleRect = colliderRef.current.getBoundingClientRect()
+            const isColliding = !(
+                playerRect.right < obstacleRect.left ||
+                playerRect.left > obstacleRect.right ||
+                playerRect.bottom < obstacleRect.top ||
+                playerRect.top > obstacleRect.bottom
+            )   
+            if (isColliding) {
+                onDamage && onDamage(5)
+            }
+            obstacle_update = 0;
         }
+        setObstacleUpdate(obstacle_update)
     }, [onDamage, playerColliderRef, time])
 
   return (
     <div
         className='ground-image-wrapper' 
-        data-moving={moving}
+        data-moving={moving ? "true" : "false"}
         ref={obstacleRef}
         style={{right: 0}}
     >

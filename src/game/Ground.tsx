@@ -3,6 +3,7 @@ import { useControllerContext } from '../context/ControllerContext';
 import { v4 as uuidv4 } from 'uuid';
 import { GroundObjects } from './ImageCollections';
 import Obstacle, { ObstacleType } from './Obstacle';
+import { usePlayerContext } from '../context/PlayerContext';
 
 const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
@@ -26,16 +27,21 @@ type Item = {
 
 export default function Ground({time}: Props) {
   const {jump} = useControllerContext();
+  const {health} = usePlayerContext();
 
   const [run, setRun] = useState(false);
   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
   const [obstaclesToRender, setObstaclesToRender] = useState<ObstacleType[]>([])
 
   useEffect(() => {
+    if (health === 0) {
+      setRun(false)
+      return
+    }
     if (jump && !run) {
       setRun(true)
     }
-  }, [jump])
+  }, [jump, health])
 
   useEffect(() => {
     //Generate initial ground items with x position
@@ -97,7 +103,7 @@ export default function Ground({time}: Props) {
       setObstaclesToRender(newObstacles)
       obstacle_update = 0
       next_obstacle_time = (Math.floor(Math.random() * 4) * 1000) + obstacle_min_generate
-      console.log('next_obstacle_time: ', next_obstacle_time)      
+      console.log('newObstacles: ', newObstacles.length)      
     }
   }, [time])
 
@@ -109,7 +115,7 @@ export default function Ground({time}: Props) {
           <div 
             className='ground-image-wrapper' 
             key={item?.id} 
-            data-moving={run}
+            data-moving={run ? "true" : "false"}
             style={{right: item.x || 0}}
             ref={item.ref}
           >            
