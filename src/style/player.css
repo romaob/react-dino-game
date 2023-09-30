@@ -7,13 +7,13 @@
 .player-part {
     position: relative;
 }
-.collider-box {
+.player-collider {
     position: absolute;
-    width: 126px;
+    width: 50px;
     height: 50px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 20%;
+    right: 10%;
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 /* if .player-main has data-jumping animate the .player-main, moving it up and back down */

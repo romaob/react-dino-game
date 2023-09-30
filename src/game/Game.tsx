@@ -4,6 +4,7 @@ import DinoTest from './DinoTest';
 import Player from './Player';
 import Ground from './Ground';
 import { ControllerProvider, useControllerContext } from '../context/ControllerContext';
+import { PlayerProvider } from '../context/PlayerContext';
 
 function Game() {
   // State variables for game data.
@@ -47,11 +48,13 @@ function Game() {
   return (
     <div>
       <ControllerProvider>
-        <>
-          <Background />
-          <Ground time={time}/>
-          <Player time={time}/>
-        </>
+        <PlayerProvider>
+          <>
+            <Background />
+            <Ground time={time}/>
+            <Player time={time}/>
+          </>
+        </PlayerProvider>
       </ControllerProvider>
     </div>
   );

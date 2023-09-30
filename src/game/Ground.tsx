@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useControllerContext } from '../context/ControllerContext';
 import { v4 as uuidv4 } from 'uuid';
+import { GroundObjects } from './ImageCollections';
+import Obstacle from './Obstacle';
 
 const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
-const ground_update_rate = 700;
+const ground_update_rate = 1000;
 var ground_update = 0;
 
 type Props = {
@@ -15,6 +17,7 @@ type Item = {
   id: string,
   img: string,
   x?: number,
+  ref?: React.RefObject<HTMLDivElement>
 }
 
 export default function Ground({time}: Props) {
@@ -22,22 +25,6 @@ export default function Ground({time}: Props) {
 
   const [run, setRun] = useState(false);
   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
-
-  const images = [
-    require('../assets/ground_01.png'),
-    require('../assets/ground_02.png'),
-    require('../assets/ground_03.png'),
-    require('../assets/ground_04.png'),
-    require('../assets/ground_05.png'),
-    require('../assets/ground_06.png'),
-    require('../assets/ground_07.png'),
-    require('../assets/ground_08.png'),
-    require('../assets/ground_09.png'),
-    require('../assets/ground_10.png'),
-    require('../assets/ground_11.png'),
-    require('../assets/ground_12.png'),
-    require('../assets/ground_13.png')
-  ]
 
   useEffect(() => {
     if (jump && !run) {
@@ -52,8 +39,9 @@ export default function Ground({time}: Props) {
       const randomIndex = Math.floor(Math.random() * 12)
       const newItem = {
         id: uuidv4(),
-        img: images[randomIndex],
-        x: ground_items_start_dst * i
+        img: GroundObjects[randomIndex],
+        x: ground_items_start_dst * i,
+        ref: React.createRef<HTMLDivElement>()
       }
       items.push(newItem)
     }
@@ -67,17 +55,29 @@ export default function Ground({time}: Props) {
       const randomIndex = Math.floor(Math.random() * 12)
       const newItem = {
         id: uuidv4(),
-        img: images[randomIndex]
+        img: GroundObjects[randomIndex],
+        ref: React.createRef<HTMLDivElement>()
       }
-      const newItems = [...itemsToRender]
-      newItems.shift()
+      const newItems = []
+
+      //Check if there is any ref outside the screen, if so, remove it
+      itemsToRender.forEach((item, index) => {
+        let bounding = item?.ref?.current?.getBoundingClientRect();
+        if (bounding && bounding.right >= 0) {
+          newItems.push(item)
+        }
+      })
+
       newItems.push(newItem)
+
       setItemsToRender(newItems)
       ground_update = 0
+      console.log('items total: ', newItems.length)
     }
   }, [time])
 
   return (
+    <>
     <div className='ground'>
       {
         itemsToRender?.map((item) => (
@@ -86,18 +86,21 @@ export default function Ground({time}: Props) {
             key={item?.id} 
             data-moving={run}
             style={{right: item.x || 0}}
-          >
-            {
-              <img 
-                key={'img'+item.id} 
-                src={item.img} 
-                className='ground-image' 
-                alt='item' 
-              />
-            }
+            ref={item.ref}
+          >            
+            <img 
+              key={'img'+item.id} 
+              src={item.img} 
+              className='ground-image' 
+              alt='item' 
+            />            
           </div>
         ))
       }
     </div>
+    <div className='obstacles'>
+      <Obstacle id={'test'} moving={run} time={time}/>
+    </div>
+    </>
   )
 }

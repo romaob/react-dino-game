@@ -1,0 +1,13 @@
+.obstacles {
+    position: absolute;
+    width: 100vw;
+    min-width: 100%;
+    height: 70px;
+    top: calc(50% + 10px);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.obstacle-collider {
+    background-color: rgba(255, 0, 0, 0.5);
+}

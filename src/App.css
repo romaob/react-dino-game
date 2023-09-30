@@ -1,6 +1,7 @@
 @import './style/background.css';
 @import './style/player.css';
 @import './style/ground.css';
+@import './style/obstacle.css';
 
 .activable-area {
     position: absolute;
