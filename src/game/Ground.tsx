@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useControllerContext } from '../context/ControllerContext';
 import { v4 as uuidv4 } from 'uuid';
 
-const ground_items_start = Math.floor(window.innerWidth / 14 / 5);
+const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
-const ground_update_rate = 1000;
+const ground_update_rate = 700;
 var ground_update = 0;
 
 type Props = {
@@ -48,7 +48,7 @@ export default function Ground({time}: Props) {
   useEffect(() => {
     //Generate initial ground items with x position
     const items = []
-    for (let i = 0; i < ground_items_start; i++) {
+    for (let i = ground_items_start-1; i >=0; i--) {
       const randomIndex = Math.floor(Math.random() * 12)
       const newItem = {
         id: uuidv4(),
