@@ -15,7 +15,7 @@ export default function Player({
 }) {    
     const {jump} = useControllerContext();
     const playerColliderRef = useRef<HTMLDivElement>(null);
-    const {health, setPlayerColliderRef} = usePlayerContext();
+    const {health, setPlayerColliderRef, running, setRunning, reset} = usePlayerContext();
     const [isJumping, setIsJumping] = useState(false)
 
     useEffect(() => {
@@ -39,12 +39,14 @@ export default function Player({
     
 
     useEffect(() => {
-        if (jump !== 0 && speed === 0) {
+        if (jump !== 0 && !running) {
             speed = 200;
+            setRunning && setRunning(true);
+            reset && reset();
+            stepDeadAnimation = 0;
             return;
         }
-        console.log('jump', jump)
-    }, [jump])
+    }, [jump, reset, running, setRunning])
 
     useEffect(() => {
       if (health === 0) {
@@ -59,7 +61,7 @@ export default function Player({
 
     if (health === 0) {
         return (
-            <div className='player-main' data-jumping={jump > 1 && jump < 4 ? true : undefined}>
+            <div className='player-main'>
                 <div className='player-collider' ref={playerColliderRef}></div>
                 {stepDeadAnimation === 1 && <img className='player-part' src={PlayerDead.imageDeadA} alt="dino" />}
                 {stepDeadAnimation === 2 && <img className='player-part' src={PlayerDead.imageDeadB} alt="dino" />}

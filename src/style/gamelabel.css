@@ -1,0 +1,19 @@
+.gamelabel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-top: 50px;
+    /* background-color: rgba(255,0,0,0.5); */
+}
+.gamelabel h1 {
+    font-size: 2em;
+    text-decoration: underline;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.gamelabel h2 {
+    font-weight: normal;
+}

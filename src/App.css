@@ -3,6 +3,11 @@
 @import './style/ground.css';
 @import './style/obstacle.css';
 @import './style/healthbar.css';
+@import './style/gamelabel.css';
+
+body {
+    font-family: 'Pixelify Sans', sans-serif;
+}
 
 .activable-area {
     position: absolute;
