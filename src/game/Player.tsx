@@ -37,7 +37,6 @@ export default function Player({
     }, [time])
 
     useEffect(() => {
-        console.log('player')
         if (gameStatus === GameStatus.RUNNING) {
             speed = 200;
         }
@@ -68,7 +67,7 @@ export default function Player({
     if (jumpValue > 0 && speed > 0) {
         return (
             <div className='player-main' data-jumping={jumpValue > 1 && jumpValue < 4 ? true : undefined}>
-                <div className='player-collider' ref={playerColliderRef}></div>
+                <div className='player-collider' ref={playerColliderRef} data-jumping={true}></div>
                 {jumpValue === 1 && <img className='player-part' src={PlayerJump.imageJumpA} alt="dino" />}
                 {jumpValue === 2 && <img className='player-part' src={PlayerJump.imageJumpB} alt="dino" />}
                 {jumpValue === 3 && <img className='player-part' src={PlayerJump.imageJumpC} alt="dino" />}

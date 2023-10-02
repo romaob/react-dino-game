@@ -65,17 +65,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     
     useEffect(() => {
         if (jumpValue !== 1) return;
-        console.log('Game', gameStatus, jumpValue)
         if (gameStatus === GameStatus.RUNNING || gameStatus === GameStatus.RESTART)
             return;
-        //If not started start the game
         if (gameStatus === GameStatus.INIT) {
-            console.log('Jumping on INIT > RUNNING');
             setGameStatus(GameStatus.RUNNING);
         }
-        //If game over restart the game
         if (gameStatus === GameStatus.GAME_OVER) {
-            console.log('Jumping on GAME_OVER > RESTART');
             //reset();
             setGameStatus(GameStatus.RESTART);
         }

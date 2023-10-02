@@ -25,7 +25,7 @@ type Item = {
 }
 
 export default function Ground({time}: Props) {
-  const {gameStatus} = useGameContext();
+  const {gameStatus, health} = useGameContext();
   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
   const [obstaclesToRender, setObstaclesToRender] = useState<ObstacleType[]>([])
 
@@ -104,7 +104,7 @@ export default function Ground({time}: Props) {
           <div 
             className='ground-image-wrapper' 
             key={item?.id} 
-            data-moving={gameStatus === GameStatus.RUNNING}
+            data-moving={gameStatus === GameStatus.RUNNING && health > 0 ? "true" : "false"}
             style={{right: item.x || 0}}
             ref={item.ref}
           >            
@@ -123,7 +123,7 @@ export default function Ground({time}: Props) {
       {obstaclesToRender.map((obstacle) => (
         <Obstacle 
           id={obstacle.id} 
-          moving={gameStatus === GameStatus.RUNNING} 
+          moving={gameStatus === GameStatus.RUNNING && health > 0} 
           time={time} 
           obstacleRef={obstacle.ref} 
           key={obstacle.id}

@@ -29,17 +29,18 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
   };
 
   async function handleJump() {    
+    if (isJumping) return;
     setIsJumping(true);
     setJumpValue(1);
-    await new Promise(r => setTimeout(r, 150));
+    await new Promise(r => setTimeout(r, 70));
     setJumpValue(2);
     await new Promise(r => setTimeout(r, 500));
     setJumpValue(3);
     await new Promise(r => setTimeout(r, 500));
-    setJumpValue(4);
-    await new Promise(r => setTimeout(r, 100));
-    setJumpValue(0);
     setIsJumping(false);
+    setJumpValue(4);
+    await new Promise(r => setTimeout(r, 70));
+    setJumpValue(0);
   }
 
   const handleKeyDown = useCallback(
