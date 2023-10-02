@@ -1,18 +1,20 @@
-import React from 'react'
-import { usePlayerContext } from '../context/PlayerContext';
+import React, { useEffect } from 'react'
+import { GameStatus, useGameContext } from '../context/GameContext';
 
 type Props = {}
 
 const is_mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 export default function GameLabel({}: Props) {
-    const {health, running} = usePlayerContext();
+    const {health} = useGameContext();
+    const {gameStatus} = useGameContext();
+
     return (
         <div className='gamelabel'>
-            {!running &&
+            {gameStatus !== GameStatus.RUNNING &&
                 <>
-                    <h2>REACT DINO RUN</h2>
-                    <h1>{health === 0 ? 'GAME OVER' : 'NEW GAME'}</h1>
+                    <h1>REACT DINO RUN</h1>
+                    <h2>{health === 0 ? 'GAME OVER' : 'NEW GAME'}</h2>
                     <div className='instructions'>
                         {is_mobile 
                             ? <p>Tap to jump</p> 

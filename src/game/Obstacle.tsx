@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Obstacles } from './ImageCollections'
-import { usePlayerContext } from '../context/PlayerContext'
+import { useGameContext } from '../context/GameContext';
 
 const obstacle_update_rate = 100;
 
@@ -27,7 +27,7 @@ export default function Obstacle({
     const [obstacleUpdate, setObstacleUpdate] = useState(0)
     const img = Obstacles[imgIndex];
 
-    const {playerColliderRef, onDamage} = usePlayerContext();
+    const {playerColliderRef, onDamage} = useGameContext();
 
     useEffect(() => {
         if (!time) return

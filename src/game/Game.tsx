@@ -4,7 +4,7 @@ import DinoTest from './DinoTest';
 import Player from './Player';
 import Ground from './Ground';
 import { ControllerProvider, useControllerContext } from '../context/ControllerContext';
-import { PlayerProvider } from '../context/PlayerContext';
+import { GameProvider } from '../context/GameContext';
 import HealthBar from './HealthBar';
 import GameLabel from './GameLabel';
 
@@ -50,7 +50,7 @@ function Game() {
   return (
     <div>
       <ControllerProvider>
-        <PlayerProvider>
+        <GameProvider>
           <>
             <Background />
             <HealthBar />
@@ -58,7 +58,7 @@ function Game() {
             <Ground time={time}/>
             <Player time={time}/>
           </>
-        </PlayerProvider>
+        </GameProvider>
       </ControllerProvider>
     </div>
   );

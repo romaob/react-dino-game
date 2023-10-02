@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useControllerContext } from '../context/ControllerContext';
 import { v4 as uuidv4 } from 'uuid';
 import { GroundObjects } from './ImageCollections';
 import Obstacle, { ObstacleType } from './Obstacle';
-import { usePlayerContext } from '../context/PlayerContext';
+import { GameStatus, useGameContext } from '../context/GameContext';
 
 const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
@@ -26,25 +25,15 @@ type Item = {
 }
 
 export default function Ground({time}: Props) {
-  const {jump} = useControllerContext();
-  const {health} = usePlayerContext();
-
-  const [run, setRun] = useState(false);
+  const {gameStatus} = useGameContext();
   const [itemsToRender, setItemsToRender] = useState<Item[]>([]);
   const [obstaclesToRender, setObstaclesToRender] = useState<ObstacleType[]>([])
 
-  useEffect(() => {
-    if (health === 0) {
-      setRun(false)
-      return
-    }
-    if (jump && !run) {
-      setRun(true)
-    }
-  }, [jump, health])
+
 
   useEffect(() => {
     //Generate initial ground items with x position
+    if (gameStatus !== GameStatus.INIT && gameStatus !== GameStatus.RESTART ) return
     const items = []
     for (let i = ground_items_start-1; i >=0; i--) {
       const randomIndex = Math.floor(Math.random() * 12)
@@ -57,10 +46,11 @@ export default function Ground({time}: Props) {
       items.push(newItem)
     }
     setItemsToRender(items)
-  },[])
+    setObstaclesToRender([])
+  },[gameStatus])
 
   useEffect(() => {
-    if (!run) return
+    if (gameStatus !== GameStatus.RUNNING) return
     ground_update += time
     if (ground_update >= ground_update_rate) {
       const randomIndex = Math.floor(Math.random() * 12)
@@ -103,7 +93,6 @@ export default function Ground({time}: Props) {
       setObstaclesToRender(newObstacles)
       obstacle_update = 0
       next_obstacle_time = (Math.floor(Math.random() * 4) * 1000) + obstacle_min_generate
-      console.log('newObstacles: ', newObstacles.length)      
     }
   }, [time])
 
@@ -115,7 +104,7 @@ export default function Ground({time}: Props) {
           <div 
             className='ground-image-wrapper' 
             key={item?.id} 
-            data-moving={run ? "true" : "false"}
+            data-moving={gameStatus === GameStatus.RUNNING}
             style={{right: item.x || 0}}
             ref={item.ref}
           >            
@@ -129,11 +118,12 @@ export default function Ground({time}: Props) {
         ))
       }
     </div>
+    
     <div className='obstacles'>
       {obstaclesToRender.map((obstacle) => (
         <Obstacle 
           id={obstacle.id} 
-          moving={run} 
+          moving={gameStatus === GameStatus.RUNNING} 
           time={time} 
           obstacleRef={obstacle.ref} 
           key={obstacle.id}

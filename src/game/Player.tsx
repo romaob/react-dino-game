@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useControllerContext } from '../context/ControllerContext';
-import { usePlayerContext } from '../context/PlayerContext';
 import { PlayerDead, PlayerJump, PlayerWalk } from './ImageCollections';
+import { GameStatus, useGameContext } from '../context/GameContext';
 
 var runUpdate = 0;
 var stepRun = 0;
@@ -13,10 +13,9 @@ export default function Player({
 }: {
     time: number;
 }) {    
-    const {jump} = useControllerContext();
+    const {jumpValue} = useControllerContext();
     const playerColliderRef = useRef<HTMLDivElement>(null);
-    const {health, setPlayerColliderRef, running, setRunning, reset} = usePlayerContext();
-    const [isJumping, setIsJumping] = useState(false)
+    const {health, setPlayerColliderRef, gameStatus} = useGameContext();
 
     useEffect(() => {
         if (speed === 0) {
@@ -36,17 +35,13 @@ export default function Player({
             }
         }
     }, [time])
-    
 
     useEffect(() => {
-        if (jump !== 0 && !running) {
+        console.log('player')
+        if (gameStatus === GameStatus.RUNNING) {
             speed = 200;
-            setRunning && setRunning(true);
-            reset && reset();
-            stepDeadAnimation = 0;
-            return;
         }
-    }, [jump, reset, running, setRunning])
+    }, [gameStatus])
 
     useEffect(() => {
       if (health === 0) {
@@ -70,14 +65,14 @@ export default function Player({
             </div>
         );
     }
-    if (jump > 0 && speed > 0) {
+    if (jumpValue > 0 && speed > 0) {
         return (
-            <div className='player-main' data-jumping={jump > 1 && jump < 4 ? true : undefined}>
+            <div className='player-main' data-jumping={jumpValue > 1 && jumpValue < 4 ? true : undefined}>
                 <div className='player-collider' ref={playerColliderRef}></div>
-                {jump === 1 && <img className='player-part' src={PlayerJump.imageJumpA} alt="dino" />}
-                {jump === 2 && <img className='player-part' src={PlayerJump.imageJumpB} alt="dino" />}
-                {jump === 3 && <img className='player-part' src={PlayerJump.imageJumpC} alt="dino" />}
-                {jump === 4 && <img className='player-part' src={PlayerJump.imageJumpD} alt="dino" />}
+                {jumpValue === 1 && <img className='player-part' src={PlayerJump.imageJumpA} alt="dino" />}
+                {jumpValue === 2 && <img className='player-part' src={PlayerJump.imageJumpB} alt="dino" />}
+                {jumpValue === 3 && <img className='player-part' src={PlayerJump.imageJumpC} alt="dino" />}
+                {jumpValue === 4 && <img className='player-part' src={PlayerJump.imageJumpD} alt="dino" />}
             </div>
         );
     } 

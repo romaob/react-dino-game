@@ -2,8 +2,8 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 
 // Define the context type
 interface ControllerContextType {
-  jump: number;
-  setJump: React.Dispatch<React.SetStateAction<number>>;
+  jumpValue: number;
+  isJumping: boolean;
 }
 
 // Create the context with initial values
@@ -20,23 +20,26 @@ export function useControllerContext() {
 
 // Create a provider component to wrap your app
 export function ControllerProvider({ children }: { children: React.ReactNode }) {
-  const [jump, setJump] = useState<number>(0);
+  const [jumpValue, setJumpValue] = useState<number>(0);
+  const [isJumping, setIsJumping] = useState(false);
 
   const contextValue: ControllerContextType = {
-    jump,
-    setJump,
+    jumpValue,
+    isJumping,
   };
 
   async function handleJump() {    
-    setJump(1);
+    setIsJumping(true);
+    setJumpValue(1);
     await new Promise(r => setTimeout(r, 150));
-    setJump(2);
+    setJumpValue(2);
     await new Promise(r => setTimeout(r, 500));
-    setJump(3);
+    setJumpValue(3);
     await new Promise(r => setTimeout(r, 500));
-    setJump(4);
-    await new Promise(r => setTimeout(r, ));
-    setJump(0);
+    setJumpValue(4);
+    await new Promise(r => setTimeout(r, 100));
+    setJumpValue(0);
+    setIsJumping(false);
   }
 
   const handleKeyDown = useCallback(
