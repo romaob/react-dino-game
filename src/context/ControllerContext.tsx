@@ -6,6 +6,8 @@ interface ControllerContextType {
   isJumping: boolean;
 }
 
+var jumpingBlocked = false;
+
 // Create the context with initial values
 const ControllerContext = createContext<ControllerContextType | undefined>(undefined);
 
@@ -28,20 +30,25 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
     isJumping,
   };
 
-  async function handleJump() {    
-    if (isJumping) return;
-    setIsJumping(true);
-    setJumpValue(1);
-    await new Promise(r => setTimeout(r, 70));
-    setJumpValue(2);
-    await new Promise(r => setTimeout(r, 500));
-    setJumpValue(3);
-    await new Promise(r => setTimeout(r, 500));
-    setIsJumping(false);
-    setJumpValue(4);
-    await new Promise(r => setTimeout(r, 70));
-    setJumpValue(0);
-  }
+  const  handleJump = useCallback(
+    async () => {
+      if (jumpingBlocked) return;
+      jumpingBlocked = true;
+      setIsJumping(true);
+      setJumpValue(1);
+      await new Promise(r => setTimeout(r, 70));
+      setJumpValue(2);
+      await new Promise(r => setTimeout(r, 500));
+      setJumpValue(3);
+      await new Promise(r => setTimeout(r, 500));
+      setIsJumping(false);
+      setJumpValue(4);
+      jumpingBlocked = false;
+      await new Promise(r => setTimeout(r, 70));
+      setJumpValue(0);
+    },
+    [],
+  )
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {

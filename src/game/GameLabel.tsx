@@ -11,7 +11,7 @@ export default function GameLabel({}: Props) {
 
     return (
         <div className='gamelabel'>
-            {gameStatus !== GameStatus.RUNNING &&
+            {gameStatus !== GameStatus.RUNNING && gameStatus !== GameStatus.PAUSED &&
                 <>
                     <h1>REACT DINO RUN</h1>
                     <h2>{health === 0 ? 'GAME OVER' : 'NEW GAME'}</h2>

@@ -43,3 +43,20 @@ export const Obstacles = [
   require('../assets/obstacle_5.png'),
   require('../assets/obstacle_6.png'),
 ]
+
+export const GroundEnemyImages = {
+  imageA: require('../assets/dino_tric_0.png'),
+  imageB: require('../assets/dino_tric_1.png'),
+  imageDead: require('../assets/dino_tric_dead.png'),
+  imageAttackA: require('../assets/dino_attack_ground_tric_0.png'),
+  imageAttackB: require('../assets/dino_attack_ground_tric_1.png'), 
+}
+
+export const AirEnemyImages = {
+  imageA: require('../assets/dino_pter_0.png'),
+  imageB: require('../assets/dino_pter_1.png'),
+  imageC: require('../assets/dino_pter_2.png'),
+  imageAttackA: require('../assets/dino_attack_air_pter_1.png'),
+  imageAttackB: require('../assets/dino_attack_ground_pter_0.png'),
+  imageAttackC: require('../assets/dino_attack_ground_pter_1.png'),
+}

@@ -15,7 +15,7 @@ export default function Player({
 }) {    
     const {jumpValue} = useControllerContext();
     const playerColliderRef = useRef<HTMLDivElement>(null);
-    const {health, setPlayerColliderRef, gameStatus} = useGameContext();
+    const {health, setPlayerColliderRef, gameStatus, attacking} = useGameContext();
 
     useEffect(() => {
         if (speed === 0) {
@@ -64,6 +64,7 @@ export default function Player({
             </div>
         );
     }
+    if (attacking) return null;
     if (jumpValue > 0 && speed > 0) {
         return (
             <div className='player-main' data-jumping={jumpValue > 1 && jumpValue < 4 ? true : undefined}>

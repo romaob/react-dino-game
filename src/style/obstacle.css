@@ -7,3 +7,7 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+.obstacle-collider {
+    /* background-color: rgba(255, 0, 0, 0.5); */
+}
