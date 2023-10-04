@@ -98,13 +98,11 @@ export default function GroundEnemy({
             if (isColliding && !attacking) {
                 onDamage && onDamage(30)
                 setColliding(true)
+                setImg(GroundEnemyImages.imageDefense)
             }
-/*
-            if (isColliding) {
-                onDamage && onDamage(10)
-                setColliding(true)
-            } else {
-                setColliding(false)
+            /*
+            if (isNear && !isColliding && !isAttacking) {
+                setImg(GroundEnemyImages.imageB)
             }
             */
             update = 0;

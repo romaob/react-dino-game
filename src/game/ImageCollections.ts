@@ -50,6 +50,7 @@ export const GroundEnemyImages = {
   imageDead: require('../assets/dino_tric_dead.png'),
   imageAttackA: require('../assets/dino_attack_ground_tric_0.png'),
   imageAttackB: require('../assets/dino_attack_ground_tric_1.png'), 
+  imageDefense: require('../assets/dino_tric_defense.png'),
 }
 
 export const AirEnemyImages = {
