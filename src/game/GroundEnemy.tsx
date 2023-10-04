@@ -32,8 +32,13 @@ export default function GroundEnemy({
 
     async function performAttackAnimation() {
         var initialHealth = health;
+        if (initialHealth === 0) {
+            setAttacking(false)
+            return;
+        }
         setGameStatus(GameStatus.PAUSED)
         setImg(GroundEnemyImages.imageAttackA)
+        setAttacking(true)
         await new Promise(r => setTimeout(r, 300));
         setImg(GroundEnemyImages.imageAttackB)
         initialHealth += 15
@@ -59,52 +64,54 @@ export default function GroundEnemy({
     useEffect(() => {
         if (dead) return
         if (!time) return
-        if (!enemyRef?.current) return
         if (!playerColliderRef?.current) return
-        if (!atackColliderRef?.current) return
         let update = lastUpdate;
         update += time
         if (update >= update_check_rate) {
             const playerRect = playerColliderRef.current.getBoundingClientRect()
-            const enemyRect = enemyRef.current.getBoundingClientRect()
-            const attackRect = atackColliderRef.current.getBoundingClientRect()
+            const enemyRect = enemyRef?.current?.getBoundingClientRect()
+            const attackRect = atackColliderRef?.current?.getBoundingClientRect()
             //Check if the player is near the obstacle
-            const isNear = !(
+            const isNear = enemyRect && !(
                 playerRect.right < enemyRect.left - near_distance ||
                 playerRect.left > enemyRect.right + near_distance ||
                 playerRect.bottom < enemyRect.top ||
                 playerRect.top > enemyRect.bottom
             )
             //Check if the player is colliding with the obstacle damage collider
-            const isAttacking = !(
+            const isAttacking = attackRect && !(
                 playerRect.right < attackRect.left ||
                 playerRect.left > attackRect.right ||
                 playerRect.bottom < attackRect.top ||
                 playerRect.top > attackRect.bottom
             )
-            //Check if the player is colliding with the obstacle damage collider
-            const isColliding = !(
+            //Check if the enemy collider is hitting or inside the player collider
+            const isColliding = enemyRect && !(
                 playerRect.right < enemyRect.left ||
                 playerRect.left > enemyRect.right ||
                 playerRect.bottom < enemyRect.top ||
                 playerRect.top > enemyRect.bottom
-            )   
+            )
 
-            if (isAttacking && !attacking) {
-                setAttacking(true)
-                performAttackAnimation();
-            }
+            //Check if the player passed the obstacle
+            const passed = enemyRect && playerRect.left > enemyRect.right
 
             if (isColliding && !attacking) {
-                onDamage && onDamage(30)
+                onDamage && onDamage(10)
                 setColliding(true)
                 setImg(GroundEnemyImages.imageDefense)
             }
-            /*
-            if (isNear && !isColliding && !isAttacking) {
+
+            if (isAttacking && !attacking && !colliding && !isColliding) {
+                performAttackAnimation();
+            }
+            if (isNear && img !== GroundEnemyImages.imageB && !isColliding && !isAttacking && !passed && !dead) {
                 setImg(GroundEnemyImages.imageB)
             }
-            */
+            
+            if (passed && !dead && img !== GroundEnemyImages.imageA) {
+                setImg(GroundEnemyImages.imageA)
+            }
             update = 0;
         } 
         setLastUpdate(update)     

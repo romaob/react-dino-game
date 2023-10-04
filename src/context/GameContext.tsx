@@ -55,6 +55,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         if (jumpValue !== 1) return;
+        // setGameStatus(gameStatus === GameStatus.RUNNING ? GameStatus.PAUSED : GameStatus.RUNNING);
+        
         if (gameStatus === GameStatus.INIT) {
             setGameStatus(GameStatus.RUNNING);
             return;
@@ -63,6 +65,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
             setGameStatus(GameStatus.RESTART);
             return;
         }
+        
     }, [jumpValue])
 
     useEffect(() => {
@@ -72,19 +75,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       }
     }, [gameStatus])
     
-    useEffect(() => {
-        if (jumpValue !== 1) return;
-        if (gameStatus === GameStatus.RUNNING || gameStatus === GameStatus.RESTART)
-            return;
-        if (gameStatus === GameStatus.INIT) {
-            setGameStatus(GameStatus.RUNNING);
-        }
-        if (gameStatus === GameStatus.GAME_OVER) {
-            //reset();
-            setGameStatus(GameStatus.RESTART);
-        }
-    }, [jumpValue])
-
     useEffect(() => {
         if (health === 0) {
             setGameStatus(GameStatus.GAME_OVER);

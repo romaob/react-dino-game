@@ -34,6 +34,24 @@
     width: 14px;
 }
 
+.air-image-wrapper {
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.air-image-wrapper[data-moving="true"] {
+    animation: move 60s linear forwards;
+}
+.air-image-wrapper[data-moving="false"] {
+    animation: move 60s linear forwards;
+    animation-play-state: paused;
+}
+
+
 /*
 .moving-image [data-moving="true"] {
     animation: move 3s linear forwards;

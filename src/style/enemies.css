@@ -22,6 +22,40 @@
     width: 5px;
     height: 10px;
     top: 20px;
-    right: 60px;
+    right: 75px;
     /* background-color: rgba(0, 0, 255, 0.5); */
+}
+
+.airEnemies {
+    position: absolute;
+    width: 100vw;
+    min-width: 100%;
+    height: 170px;
+    top: calc(50% - 60px);
+    overflow: hidden;
+    white-space: nowrap;
+    /* background-color: rgba(255, 0, 255, 0.5); */
+}
+.enemy-air-collider {
+    position: absolute;
+    top: 25px;
+    right: 70px;
+    width: 40px;
+    height: 25px;
+    /* background-color: rgba(255, 0, 0, 0.5); */
+}
+
+.enemy-air-atack-collider {
+    position: absolute;
+    width: 5px;
+    height: 10px;
+    top: 45px;
+    right: 55px;
+    /* background-color: rgba(0, 0, 255, 0.5); */
+}
+.enemy-image-air[data-attacked="true"] {
+    padding-top: 30px;
+}
+.enemy-image-air[data-grounded="true"] {
+    padding-top: 70px;
 }
