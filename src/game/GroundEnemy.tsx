@@ -96,8 +96,8 @@ export default function GroundEnemy({
             //Check if the player passed the obstacle
             const passed = enemyRect && playerRect.left > enemyRect.right
 
-            if (isColliding && !attacking) {
-                onDamage && onDamage(10)
+            if (isColliding && !attacking && !colliding) {
+                onDamage && onDamage(50)
                 setColliding(true)
                 setImg(GroundEnemyImages.imageDefense)
             }

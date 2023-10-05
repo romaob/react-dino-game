@@ -54,9 +54,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
 
     useEffect(() => {
-        if (jumpValue !== 1) return;
-        // setGameStatus(gameStatus === GameStatus.RUNNING ? GameStatus.PAUSED : GameStatus.RUNNING);
-        
+        if (jumpValue !== 1) return;       
         if (gameStatus === GameStatus.INIT) {
             setGameStatus(GameStatus.RUNNING);
             return;

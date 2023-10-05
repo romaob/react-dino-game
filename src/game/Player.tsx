@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useControllerContext } from '../context/ControllerContext';
 import { PlayerDead, PlayerJump, PlayerWalk } from './ImageCollections';
 import { GameStatus, useGameContext } from '../context/GameContext';
@@ -16,6 +16,18 @@ export default function Player({
     const {jumpValue} = useControllerContext();
     const playerColliderRef = useRef<HTMLDivElement>(null);
     const {health, setPlayerColliderRef, gameStatus, attacking} = useGameContext();
+    const [lastHealth, setLastHealth] = useState(health);
+    const playerImageRef = useRef<HTMLImageElement>(null);
+
+    function showDamage() {
+        console.log('showDamage', !!playerImageRef?.current)
+        if (!playerImageRef?.current) return;
+        playerImageRef.current.style.filter = 'invert(32%) sepia(21%) saturate(7466%) hue-rotate(344deg) brightness(89%) contrast(78%)';
+        setTimeout(() => {
+            if (!playerImageRef?.current) return;
+            playerImageRef.current.style.filter = 'none';
+        }, 1000);
+    }
 
     useEffect(() => {
         if (speed === 0) {
@@ -43,9 +55,13 @@ export default function Player({
     }, [gameStatus])
 
     useEffect(() => {
-      if (health === 0) {
-        stepDeadAnimation = 1;
-      }
+        if (health < lastHealth) {
+            showDamage();
+        }
+        if (health === 0) {
+            stepDeadAnimation = 1;
+        }
+      setLastHealth(health);
     }, [health])
 
     useEffect(() => {
@@ -57,10 +73,10 @@ export default function Player({
         return (
             <div className='player-main'>
                 <div className='player-collider' ref={playerColliderRef}></div>
-                {stepDeadAnimation === 1 && <img className='player-part' src={PlayerDead.imageDeadA} alt="dino" />}
-                {stepDeadAnimation === 2 && <img className='player-part' src={PlayerDead.imageDeadB} alt="dino" />}
-                {stepDeadAnimation === 3 && <img className='player-part' src={PlayerDead.imageDeadC} alt="dino" />}
-                {stepDeadAnimation === 4 && <img className='player-part' src={PlayerDead.imageDeadD} alt="dino" />}
+                {stepDeadAnimation === 1 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadA} alt="dino" />}
+                {stepDeadAnimation === 2 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadB} alt="dino" />}
+                {stepDeadAnimation === 3 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadC} alt="dino" />}
+                {stepDeadAnimation === 4 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadD} alt="dino" />}
             </div>
         );
     }
@@ -69,20 +85,20 @@ export default function Player({
         return (
             <div className='player-main' data-jumping={jumpValue > 1 && jumpValue < 4 ? true : undefined}>
                 <div className='player-collider' ref={playerColliderRef} data-jumping={true}></div>
-                {jumpValue === 1 && <img className='player-part' src={PlayerJump.imageJumpA} alt="dino" />}
-                {jumpValue === 2 && <img className='player-part' src={PlayerJump.imageJumpB} alt="dino" />}
-                {jumpValue === 3 && <img className='player-part' src={PlayerJump.imageJumpC} alt="dino" />}
-                {jumpValue === 4 && <img className='player-part' src={PlayerJump.imageJumpD} alt="dino" />}
+                {jumpValue === 1 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpA} alt="dino" />}
+                {jumpValue === 2 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpB} alt="dino" />}
+                {jumpValue === 3 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpC} alt="dino" />}
+                {jumpValue === 4 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpD} alt="dino" />}
             </div>
         );
     } 
     return (
         <div className='player-main'> 
             <div className='player-collider' ref={playerColliderRef}></div>
-            {stepRun === -1 && <img className='player-part' src={PlayerWalk.imageIdleA} alt="dino" />}
-            {stepRun === 0 && <img className='player-part' src={PlayerWalk.imageA} alt="dino" />}
-            {stepRun === 1 && <img className='player-part' src={PlayerWalk.imageB} alt="dino" />}
-            {stepRun === 2 && <img className='player-part' src={PlayerWalk.imageC} alt="dino" />}
+            {stepRun === -1 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageIdleA} alt="dino" />}
+            {stepRun === 0 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageA} alt="dino" />}
+            {stepRun === 1 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageB} alt="dino" />}
+            {stepRun === 2 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageC} alt="dino" />}
         </div> 
     )
     

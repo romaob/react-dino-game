@@ -101,9 +101,9 @@ export default function AirEnemy({
             playerRect.bottom < enemyRect.top ||
             playerRect.top > enemyRect.bottom
         )
-        if (isColliding) {
+        if (isColliding && !colliding) {
             setColliding(true)
-            onDamage && onDamage(20)
+            onDamage && onDamage(25)
         }
         
         //Check if it is attack

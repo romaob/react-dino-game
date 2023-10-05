@@ -23,8 +23,9 @@ export default function Obstacle({
     moving,
 }: Props) {
     const colliderRef = useRef<HTMLDivElement>(null)
-    const [imgIndex, setimgIndex] = useState( Math.floor(Math.random() * 6))
+    const [imgIndex, setimgIndex] = useState(Math.floor(Math.random() * 6))
     const [obstacleUpdate, setObstacleUpdate] = useState(0)
+    const [damage, setDamage] = useState(false)
     const img = Obstacles[imgIndex];
 
     const {playerColliderRef, onDamage} = useGameContext();
@@ -46,13 +47,15 @@ export default function Obstacle({
                 playerRect.bottom < obstacleRect.top ||
                 playerRect.top > obstacleRect.bottom
             )   
-            if (isColliding) {
-                onDamage && onDamage(5)
+            if (isColliding && !damage) {
+                const mult = Math.ceil(((imgIndex===5 ? imgIndex + 1 : imgIndex) + 1) / 2)
+                onDamage && onDamage(10*mult)
+                setDamage(true)
             }
             obstacle_update = 0;
         }
         setObstacleUpdate(obstacle_update)
-    }, [onDamage, playerColliderRef, time])
+    }, [time])
 
   return (
     <div

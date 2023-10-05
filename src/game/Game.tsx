@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Background from './Background';
 import DinoTest from './DinoTest';
 import Player from './Player';
@@ -15,6 +15,7 @@ function Game() {
   const [time, setTime] = useState(0);
   const [lastTime, setLastTime] = useState(0); 
   const [count, setCount] = useState(0)
+  const gameRef = useRef<number | null>(null);
 
   // Update game state and render the game.
   const gameLoop = useCallback(
@@ -27,24 +28,27 @@ function Game() {
     
         // Request the next frame.    
         if (lastTime !== 0) {
-
             setTime(new Date().getTime() - lastTime);
         } else {
             setLastTime(new Date().getTime());
         }
-        requestAnimationFrame(gameLoop);
+        const x = requestAnimationFrame(gameLoop);
+        if (gameRef.current === null) {
+            gameRef.current = x;
+        }
     },
     [lastTime, time],
   );
 
   // Start the game loop when the component mounts.
   useEffect(() => {
-    requestAnimationFrame(gameLoop);
-
-    // Clean up the game loop when the component unmounts.
+    const x = requestAnimationFrame(gameLoop);
+    gameRef.current = x;
     return () => {
-      // Cancel any pending animation frames.
-    };
+        if (gameRef.current !== null) {
+            cancelAnimationFrame(gameRef.current);
+        }
+    }
   }, [gameLoop]);
 
   return (

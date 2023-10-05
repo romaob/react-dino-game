@@ -84,7 +84,6 @@ export default function Ground({time}: Props) {
     }
     //Obstacle generator
     obstacle_update += time
-    enemy_update += time
     if (obstacle_update >= next_obstacle_time) {
       const generationIndex = Math.floor(Math.random() * 10)
 
@@ -104,7 +103,7 @@ export default function Ground({time}: Props) {
         newObstacles.push(newObstacle)
         setObstaclesToRender(newObstacles)
       } else {
-        if (enemy_update > ground_enemy_min_generate) {
+        
           const newEnemy = {
             id: uuidv4(),
             ref: React.createRef<HTMLDivElement>()
@@ -131,10 +130,8 @@ export default function Ground({time}: Props) {
           }
           setGroundEnemies(newEnemies)
           setAirEnemies(newAirEnemies)
-        }
+        
       } 
-
-
       obstacle_update = 0
       next_obstacle_time = (Math.floor(Math.random() * 4) * 1000) + obstacle_min_generate
     }
