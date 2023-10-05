@@ -5,6 +5,7 @@
 @import './style/obstacle.css';
 @import './style/healthbar.css';
 @import './style/gamelabel.css';
+@import './style/scorelabel.css';
 
 body {
     font-family: 'Pixelify Sans', sans-serif;

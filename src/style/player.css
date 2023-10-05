@@ -28,6 +28,13 @@
     animation: jump 1s ease-in-out;
 }
 
+.score-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    animation: scorePop 1s ease-in-out;
+}
+
 /* The jump animation */
 @keyframes jump {
     0% {
@@ -38,5 +45,20 @@
     }
     100% {
         transform: translate(-50%, 0);
+    }
+}
+
+@keyframes scorePop {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(0, -100%);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100%);
+        opacity: 0;
     }
 }

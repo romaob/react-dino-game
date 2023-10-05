@@ -15,9 +15,11 @@ export default function Player({
 }) {    
     const {jumpValue} = useControllerContext();
     const playerColliderRef = useRef<HTMLDivElement>(null);
-    const {health, setPlayerColliderRef, gameStatus, attacking} = useGameContext();
+    const {health, setPlayerColliderRef, gameStatus, attacking, score, setScore} = useGameContext();
     const [lastHealth, setLastHealth] = useState(health);
     const playerImageRef = useRef<HTMLImageElement>(null);
+    const [showScore, setShowScore] = useState(0)
+    const [lastScore, setLastScore] = useState(score || 0)
 
     function showDamage() {
         console.log('showDamage', !!playerImageRef?.current)
@@ -27,6 +29,13 @@ export default function Player({
             if (!playerImageRef?.current) return;
             playerImageRef.current.style.filter = 'none';
         }, 1000);
+    }
+
+    function getSmallScore() {
+        if (Math.abs(showScore) < 2) return null;
+        return (
+            <div className='score-info'>{showScore > 0 ? "+" : ""}{showScore}</div>
+        )
     }
 
     useEffect(() => {
@@ -44,6 +53,9 @@ export default function Player({
 
             if (stepDeadAnimation > 0 && stepDeadAnimation < 4) {
                 stepDeadAnimation++;
+            }
+            if (health > 0) {
+                setScore && setScore(1);
             }
         }
     }, [time])
@@ -65,6 +77,18 @@ export default function Player({
     }, [health])
 
     useEffect(() => {
+        if (score !== lastScore) {
+            if (Math.abs(score - lastScore) > 1) {
+                setShowScore(score - lastScore);
+                setTimeout(() => {
+                    setShowScore(0);
+                }, 1000);
+            }
+        }
+        setLastScore(score);
+    }, [score])
+
+    useEffect(() => {
       if (!playerColliderRef?.current) return
         setPlayerColliderRef(playerColliderRef)
     }, [setPlayerColliderRef])
@@ -72,6 +96,7 @@ export default function Player({
     if (health === 0) {
         return (
             <div className='player-main'>
+                {getSmallScore()}
                 <div className='player-collider' ref={playerColliderRef}></div>
                 {stepDeadAnimation === 1 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadA} alt="dino" />}
                 {stepDeadAnimation === 2 && <img className='player-part' ref={playerImageRef} src={PlayerDead.imageDeadB} alt="dino" />}
@@ -80,10 +105,17 @@ export default function Player({
             </div>
         );
     }
-    if (attacking) return null;
+    if (attacking) {
+        return (
+            <div className='player-main'>
+                {getSmallScore()}
+            </div>
+        );
+    }
     if (jumpValue > 0 && speed > 0) {
         return (
             <div className='player-main' data-jumping={jumpValue > 1 && jumpValue < 4 ? true : undefined}>
+                {getSmallScore()}
                 <div className='player-collider' ref={playerColliderRef} data-jumping={true}></div>
                 {jumpValue === 1 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpA} alt="dino" />}
                 {jumpValue === 2 && <img className='player-part' ref={playerImageRef} src={PlayerJump.imageJumpB} alt="dino" />}
@@ -94,6 +126,7 @@ export default function Player({
     } 
     return (
         <div className='player-main'> 
+            {getSmallScore()}
             <div className='player-collider' ref={playerColliderRef}></div>
             {stepRun === -1 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageIdleA} alt="dino" />}
             {stepRun === 0 && <img className='player-part' ref={playerImageRef} src={PlayerWalk.imageA} alt="dino" />}

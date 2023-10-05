@@ -24,7 +24,7 @@ export default function AirEnemy({
     enemyRef
 }: Props) {
     const atackColliderRef = React.useRef<HTMLDivElement>(null)
-    const {health, playerColliderRef, onDamage, setHealth, setGameStatus, attacking, setAttacking} = useGameContext();
+    const {health, playerColliderRef, onDamage, setHealth, setGameStatus, attacking, setAttacking, setScore} = useGameContext();
     const [img, setImg] = useState(AirEnemyImages.imageA);
     const [lastUpdate, setLastUpdate] = useState(0);
     const [lastFlyUpdate, setLastFlyUpdate] = useState(0)
@@ -39,6 +39,7 @@ export default function AirEnemy({
             setAttacking(false)
             return;
         }
+        setScore && setScore(100);
         setAttacked(true)
         setGameStatus(GameStatus.PAUSED)
         setImg(AirEnemyImages.imageAttackA)

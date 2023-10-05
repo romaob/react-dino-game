@@ -19,6 +19,8 @@ interface GameContextType {
     setGameStatus: (status: GameStatus) => void;
     attacking: boolean;
     setAttacking: (attacking: boolean) => void;
+    score: number;
+    setScore?: (score: number) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -38,9 +40,15 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const [playerColliderRef, setPlayerColliderRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.INIT);
     const [attacking, setAttacking] = useState(false)
+    const [score, setScore] = useState(0);
+
+    const onScore = (amount: number) => {
+        setScore(score + amount < 0 ? 0 : score + amount);
+    }
 
     const onDamage = (amount: number) => {
         setHealth(health - amount > 0 ? health - amount : 0);
+        onScore(-amount);
     }
 
     const reset = () => {
@@ -89,6 +97,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setGameStatus,
         attacking,
         setAttacking,
+        score,
+        setScore: onScore,
     };
 
     return (

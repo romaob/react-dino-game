@@ -1,0 +1,10 @@
+.scorelabel {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    width: 100%;
+    z-index: 1;
+}

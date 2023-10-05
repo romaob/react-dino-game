@@ -6,8 +6,7 @@ type Props = {}
 const is_mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 export default function GameLabel({}: Props) {
-    const {health} = useGameContext();
-    const {gameStatus} = useGameContext();
+    const {health, gameStatus, score} = useGameContext();
 
     return (
         <div className='gamelabel'>
@@ -15,6 +14,9 @@ export default function GameLabel({}: Props) {
                 <>
                     <h1>REACT DINO RUN</h1>
                     <h2>{health === 0 ? 'GAME OVER' : 'NEW GAME'}</h2>
+                    {gameStatus === GameStatus.GAME_OVER &&
+                        <h2>Score: {score}</h2>
+                    }
                     <div className='instructions'>
                         {is_mobile 
                             ? <p>Tap to jump</p> 
