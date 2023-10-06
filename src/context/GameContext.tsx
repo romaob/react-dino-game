@@ -36,7 +36,7 @@ export function useGameContext() {
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
     const {jumpValue} = useControllerContext();
-    const [health, setHealth] = useState(10);
+    const [health, setHealth] = useState(100);
     const [playerColliderRef, setPlayerColliderRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
     const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.INIT);
     const [attacking, setAttacking] = useState(false)
