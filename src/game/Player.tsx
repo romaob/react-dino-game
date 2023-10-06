@@ -62,7 +62,7 @@ export default function Player({
 
     useEffect(() => {
         if (gameStatus === GameStatus.RUNNING) {
-            speed = 200;
+            speed = 100;
         }
     }, [gameStatus])
 

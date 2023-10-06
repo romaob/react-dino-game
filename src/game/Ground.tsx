@@ -8,15 +8,12 @@ import AirEnemy, { AirEnemyType } from './AirEnemy';
 
 const ground_items_start = Math.round(window.innerWidth / 14 / 5);
 const ground_items_start_dst = Math.floor(window.innerWidth / ground_items_start);
-const ground_update_rate = 1000;
+const ground_update_rate = 500;
 var ground_update = 0;
 
-const obstacle_min_generate = 2000;
+const obstacle_min_generate = 1000;
 var obstacle_update = 0;
 var next_obstacle_time = obstacle_min_generate;
-
-const ground_enemy_min_generate = 10000;
-var enemy_update = 0;
 
 type Props = {
   time: number
@@ -133,7 +130,7 @@ export default function Ground({time}: Props) {
         
       } 
       obstacle_update = 0
-      next_obstacle_time = (Math.floor(Math.random() * 4) * 1000) + obstacle_min_generate
+      next_obstacle_time = Math.floor(Math.random() * 1000) + obstacle_min_generate
     }
 
   }, [time])

@@ -30,6 +30,10 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
     isJumping,
   };
 
+  const onClick = () =>{
+    handleJump();
+  }
+
   const  handleJump = useCallback(
     async () => {
       if (jumpingBlocked) return;
@@ -56,7 +60,7 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
             handleJump();
           }
     },
-    [],
+    [handleJump],
   )
 
   useEffect(() => {
@@ -66,11 +70,10 @@ export function ControllerProvider({ children }: { children: React.ReactNode }) 
     };
   }, [handleKeyDown]);
 
-
   return (
     <ControllerContext.Provider value={contextValue}>
         {children}
-        <div className='activable-area' onClick={handleJump}></div>
+        <div className='activable-area' onClick={onClick}></div>
     </ControllerContext.Provider>
   );
 }
