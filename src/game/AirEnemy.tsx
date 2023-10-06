@@ -114,7 +114,7 @@ export default function AirEnemy({
             playerRect.bottom < attackRect.top ||
             playerRect.top > attackRect.bottom
         )
-        if (isAttacking) {
+        if (isAttacking && !isColliding && !colliding && !attacking) {
             setAttacking(true)
             performAttackAnimation()
         }       

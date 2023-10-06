@@ -62,6 +62,9 @@ export default function Player({
     useEffect(() => {
         if (gameStatus === GameStatus.RUNNING) {
             speed = 100;
+        } 
+        if (gameStatus === GameStatus.GAME_OVER) {
+            setLastScore(0);
         }
     }, [gameStatus])
 
@@ -86,6 +89,7 @@ export default function Player({
         }
         setLastScore(score);
     }, [score])
+
 
     useEffect(() => {
       if (!playerColliderRef?.current) return
