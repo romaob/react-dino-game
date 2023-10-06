@@ -53,6 +53,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
 
     const reset = () => {
         setHealth(100);
+        setScore(0);
     }
 
     function updateHealth(hp: number) {

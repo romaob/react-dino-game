@@ -22,7 +22,6 @@ export default function Player({
     const [lastScore, setLastScore] = useState(score || 0)
 
     function showDamage() {
-        console.log('showDamage', !!playerImageRef?.current)
         if (!playerImageRef?.current) return;
         playerImageRef.current.style.filter = 'invert(32%) sepia(21%) saturate(7466%) hue-rotate(344deg) brightness(89%) contrast(78%)';
         setTimeout(() => {
