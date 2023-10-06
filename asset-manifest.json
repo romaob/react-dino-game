@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/react-dino-game/static/css/main.dec01a00.css",
-    "main.js": "/react-dino-game/static/js/main.8f9c2528.js",
+    "main.js": "/react-dino-game/static/js/main.1e576610.js",
     "static/js/787.4cadbcc3.chunk.js": "/react-dino-game/static/js/787.4cadbcc3.chunk.js",
     "index.html": "/react-dino-game/index.html",
     "main.dec01a00.css.map": "/react-dino-game/static/css/main.dec01a00.css.map",
-    "main.8f9c2528.js.map": "/react-dino-game/static/js/main.8f9c2528.js.map",
+    "main.1e576610.js.map": "/react-dino-game/static/js/main.1e576610.js.map",
     "787.4cadbcc3.chunk.js.map": "/react-dino-game/static/js/787.4cadbcc3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.dec01a00.css",
-    "static/js/main.8f9c2528.js"
+    "static/js/main.1e576610.js"
   ]
 }
