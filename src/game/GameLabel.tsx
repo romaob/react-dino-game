@@ -24,6 +24,13 @@ export default function GameLabel({}: Props) {
                         }
                         <p>and {health === 0 ? 'restart' : 'start'} the game</p>
                     </div>
+                    <div className='gameinfo'>
+                        <p>Developed by <a href='https://github.com/romaob' target="_blank">romaob</a></p>
+                        <a href='https://github.com/romaob/react-dino-game' className='repo' target='_blank'>                          
+                            <img src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' alt='github logo'/>
+                            <p>Github repo</p>
+                        </a>
+                    </div>
                 </>
             }
         </div>

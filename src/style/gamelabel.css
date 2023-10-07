@@ -4,6 +4,7 @@
     transform: translate(-50%, 0);
     text-align: center;
     padding-top: 50px;
+    z-index: 100;
 }
 .gamelabel h1 {
     font-size: 2em;
@@ -15,4 +16,19 @@
 
 .gamelabel h2 {
     font-weight: normal;
+}
+
+.gameinfo {
+    border-top: 1px solid black;
+}
+
+.gameinfo img {
+    width: 72px;
+    height: 72px;
+}
+
+.gameinfo .repo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
