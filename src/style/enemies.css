@@ -11,19 +11,17 @@
 .enemy-ground-collider {
     position: absolute;
     top: 26px;
-    right: 90px;
-    width: 10px;
+    right: 85px;
+    width: 15px;
     height: 30px;
-    /* background-color: rgba(255, 0, 0, 0.5); */
 }
 
 .enemy-ground-atack-collider {
     position: absolute;
-    width: 5px;
+    width: 10px;
     height: 10px;
     top: 20px;
-    right: 75px;
-    /* background-color: rgba(0, 0, 255, 0.5); */
+    right: 60px;
 }
 
 .airEnemies {
@@ -34,7 +32,6 @@
     top: calc(50% - 60px);
     overflow: hidden;
     white-space: nowrap;
-    /* background-color: rgba(255, 0, 255, 0.5); */
 }
 .enemy-air-collider {
     position: absolute;
@@ -42,16 +39,14 @@
     right: 70px;
     width: 40px;
     height: 25px;
-    /* background-color: rgba(255, 0, 0, 0.5); */
 }
 
 .enemy-air-atack-collider {
     position: absolute;
-    width: 5px;
+    width: 15px;
     height: 10px;
     top: 45px;
-    right: 55px;
-    /* background-color: rgba(0, 0, 255, 0.5); */
+    right: 40px;
 }
 .enemy-image-air[data-attacked="true"] {
     padding-top: 30px;
