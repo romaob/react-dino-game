@@ -19,7 +19,15 @@
 }
 
 .gameinfo {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
     border-top: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .gameinfo img {
