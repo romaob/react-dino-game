@@ -50,12 +50,7 @@ export default function Ground({time}: Props) {
     setItemsToRender(items)
     setObstaclesToRender([])
     setGroundEnemies([])
-    setAirEnemies([
-      {
-        id: uuidv4(),
-        ref: React.createRef<HTMLDivElement>()
-      }
-    ])
+    setAirEnemies([])
   },[gameStatus])
 
   useEffect(() => {
